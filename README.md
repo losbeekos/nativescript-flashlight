@@ -18,14 +18,14 @@ To use the flashlight module you must first `require()` it:
 
 ```js
 // JavaScript
-var flashlight = require("nativescript-flashlight");
+var flashlight = require("nativescript-flashlight").FlashLight.getInstance();
 ```
 
 Or if you’re using TypeScript, `import` the module:
 
 ```js
 // TypeScript
-import * as flashlight from "nativescript-flashlight";
+import { FlashLight } from 'nativescript-flashlight/flashlight.android';
 ```
 
 After you have a reference to the module you can then call its `on()`, `off()`, and `toggle()` methods. For example, the code below turns your device's flashlight on with an `intensity` setting of 25%.
@@ -34,7 +34,7 @@ The optional `intensity` is supported __only on iOS__ and is by default `1.0`, w
 
 ```js
 // my-page.js
-var flashlight = require("nativescript-flashlight");
+var flashlight = require("nativescript-flashlight").FlashLight.getInstance();
 flashlight.on({
     intensity: 0.25
 });
@@ -44,7 +44,7 @@ In most cases you'll want to wrap your `on()` call with a check of `isAvailable(
 
 ```js
 // my-page.js
-var flashlight = require("nativescript-flashlight");
+var flashlight = require("nativescript-flashlight").FlashLight.getInstance();
 if (flashlight.isAvailable()) {
 	flashlight.on();
 } else {
@@ -67,7 +67,7 @@ The code below creates a button that toggles the device's flashlight:
 
 ```js
 // my-page.js
-var flashlight = require("nativescript-flashlight");
+var flashlight = require("nativescript-flashlight").FlashLight.getInstance();
 var observable = require("data/observable");
 var viewModel = new observable.Observable();
 
