@@ -2,35 +2,42 @@
   "name": "nativescript-flashlight",
   "version": "1.2.0",
   "description": "A flashlight NativeScript module for Android and iOS",
-  "main": "flashlight.js",
+  "main": "flashlight",
   "typings": "index.d.ts",
   "nativescript": {
     "platforms": {
-      "ios": "1.1.0",
-      "android": "1.1.0"
+      "ios": "2.3.0",
+      "android": "2.3.0"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tjvantoll/nativescript-flashlight.git"
+    "url": "https://github.com/Essent/nativescript-flashlight.git"
   },
   "keywords": [
     "NativeScript"
   ],
-  "author": "TJ VanToll <tj.vantoll@gmail.com> (http://tjvantoll.com/)",
-   "contributors": [
-    {
-      "name": "Brad Martin",
-      "email": "bradwaynemartin@gmail.com",
-      "url": "https://github.com/bradmartin"
-    }
-   ],
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/tjvantoll/nativescript-flashlight/blob/master/LICENSE"
-  },
+  "author": "Essent",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tjvantoll/nativescript-flashlight/issues"
+    "url": "https://github.com/Essent/nativescript-flashlight/issues"
   },
-  "homepage": "https://github.com/tjvantoll/nativescript-flashlight"
+  "homepage": "https://github.com/Essent/nativescript-flashlight",
+  "scripts": {
+    "build": "tsc",
+    "debug.android": "npm run preparedemo && cd demo && tns debug android --emulator",
+    "debug.ios": "npm run preparedemo && cd demo && tns debug ios --emulator",
+    "demo.android": "npm run preparedemo && cd demo && tns run android",
+    "demo.ios": "npm run preparedemo && cd demo && tns run ios",
+    "lint": "tslint *.ts --exclude \"*.d.ts\"",
+    "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-flashlight && tns plugin add .. && tns install",
+    "prepublish": "npm run build",
+    "setup": "npm install && cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd .."
+  },
+  "devDependencies": {
+    "tns-core-modules": "2.5.1",
+    "tns-platform-declarations": "2.5.1",
+    "typescript": "2.1.6",
+    "tslint": "4.4.2"
+  }
 }

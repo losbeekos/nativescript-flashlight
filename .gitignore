@@ -3,3 +3,4 @@ demo/platforms/
 demo/node_modules
 demo/app/*.js
 npm-debug.log
+*.js
