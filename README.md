@@ -26,9 +26,12 @@ Or if you’re using TypeScript, `import` the module:
 ```js
 // TypeScript
 import { FlashLight } from 'nativescript-flashlight/flashlight.android';
+let flashLight: FlashLight = FlashLight.getInstance(); 
 ```
 
-After you have a reference to the module you can then call its `on()`, `off()`, and `toggle()` methods. For example, the code below turns your device's flashlight on with an `intensity` setting of 25%.
+**Please note that you should call FlashLight.getInstance() in an appropriate lifecycle moment. If you call it to early the androidApplication might not be instantiated and the initialisation of the plugin might fail.**
+
+After you have a reference to the instance you can then call its `on()`, `off()`, and `toggle()` methods. For example, the code below turns your device's flashlight on with an `intensity` setting of 25%.
 
 The optional `intensity` is supported __only on iOS__ and is by default `1.0`, which is 100% brightness.
 

@@ -1,6 +1,7 @@
 import { FlashLightCommon } from './flashlight.common';
 import { device } from 'platform';
 import { android as androidApplication } from 'application';
+import { isNullOrUndefined } from 'utils/types';
 
 export class FlashLight extends FlashLightCommon {
     private camera: any;
@@ -8,7 +9,7 @@ export class FlashLight extends FlashLightCommon {
     private cameraManager: any;
     private parameters: any;
 
-    private static instance: FlashLight = new FlashLight();
+    private static instance: FlashLight;
 
     private get hasCamera2API(): boolean {
         let sdkVersion: string = device.sdkVersion.replace('(ios)', '').replace('android', '');
@@ -17,7 +18,7 @@ export class FlashLight extends FlashLightCommon {
 
     public constructor() {
         super();
-        if(FlashLight.instance) {
+        if(!isNullOrUndefined(FlashLight.instance)) {
             throw new Error('Error: Instance failed: Use FlashLight.getInstance() instead of new.');
         }
 
@@ -26,6 +27,9 @@ export class FlashLight extends FlashLightCommon {
     }
 
     static getInstance() {
+        if(isNullOrUndefined(FlashLight.instance)) {
+            FlashLight.instance = new FlashLight();
+        }
         return FlashLight.instance;
     }
 
@@ -37,7 +41,7 @@ export class FlashLight extends FlashLightCommon {
     public on(arg: any): void {
         this.checkAvailability();
 
-        if (this.hasCamera2API) {
+        if (this.hasCamera2API === true) {
             this.cameraManager.setTorchMode(this.camera, true);
         } else {
             this.parameters.setFlashMode(this.camera.Parameters.FLASH_MODE_TORCH);
@@ -46,7 +50,7 @@ export class FlashLight extends FlashLightCommon {
     }
 
     public off(): void {
-        if (this.hasCamera2API) {
+        if (this.hasCamera2API === true) {
             this.cameraManager.setTorchMode(this.camera, false);
         } else {
             this.parameters.setFlashMode(this.camera.Parameters.FLASH_MODE_OFF);
@@ -57,11 +61,15 @@ export class FlashLight extends FlashLightCommon {
     }
 
     private init(): void {
-        if (this.hasCamera2API && !this.cameraManager) {
+        if (this.hasCamera2API === true && isNullOrUndefined(this.cameraManager)) {
+            if(isNullOrUndefined(androidApplication)) {
+                console.error('androidApplication is not instantiated, please call the init on a later moment');
+                return;
+            }
             this.appContext = androidApplication.context;
             this.cameraManager = this.appContext.getSystemService((<any>android.content.Context).CAMERA_SERVICE);
             this.camera = this.cameraManager.getCameraIdList()[0];
-        } else if(!this.camera) {
+        } else if(isNullOrUndefined(this.camera)) {
             this.camera = android.hardware.Camera.open(0);
             this.parameters = this.camera.getParameters();
         }
