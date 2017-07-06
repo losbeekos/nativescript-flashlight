@@ -13,7 +13,7 @@ export class FlashLight extends FlashLightCommon {
 
     private get hasCamera2API(): boolean {
         let sdkVersion: string = device.sdkVersion.replace('(ios)', '').replace('android', '');
-        return parseInt(sdkVersion) > 20;
+        return parseInt(sdkVersion) > 22;
     }
 
     public constructor() {
